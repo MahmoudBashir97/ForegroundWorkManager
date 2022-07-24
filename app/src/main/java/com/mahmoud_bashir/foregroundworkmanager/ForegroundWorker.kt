@@ -22,12 +22,22 @@ class ForegroundWorker(context:Context, parameters:WorkerParameters)
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
 
-    override suspend fun doWork(): Result = withContext(Dispatchers.IO){
+//    override suspend fun doWork(): Result = withContext(Dispatchers.IO){
+//        setForeground(createForegroundInfo())
+//        return@withContext kotlin.runCatching {
+//            delay(10000) // here is the time for running task
+//            Result.success()
+//        }.getOrElse { Result.failure() }
+//    }
+
+    override suspend fun doWork(): Result{
         setForeground(createForegroundInfo())
-        return@withContext kotlin.runCatching {
-            delay(10000) // here is the time for running task
-            Result.success()
-        }.getOrElse { Result.failure() }
+        for (elem in 1..10)
+            if (elem == 6)  {
+                delay(10000)
+                return Result.success()
+            }
+        return Result.failure()
     }
 
     private fun createForegroundInfo(): ForegroundInfo {
