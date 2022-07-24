@@ -25,7 +25,7 @@ class ForegroundWorker(context:Context, parameters:WorkerParameters)
     override suspend fun doWork(): Result = withContext(Dispatchers.IO){
         setForeground(createForegroundInfo())
         return@withContext kotlin.runCatching {
-            delay(5000)
+            delay(10000) // here is the time for running task
             Result.success()
         }.getOrElse { Result.failure() }
     }
